@@ -726,7 +726,7 @@
                     </div>
                     
                     <div class="location-group">
-                        <span class="header-location">Espumados del Litorall</span>
+                        <span class="header-location">Espumados del Litoralll</span>
                         <div class="social-icons">
                             <a href="https://www.facebook.com/profile.php?id=61571445715819" class="social-icon" target="_blank" rel="noopener noreferrer">
                                 <svg width="14" height="14" viewBox="0 0 24 24" fill="#FF7033">
