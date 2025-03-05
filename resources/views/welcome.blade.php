@@ -619,6 +619,82 @@
                     font-size: 18px;
                     padding: 15px 25px;
                 }
+                .form-control.is-invalid {
+                    border-color: #dc3545;
+                    background-image: none;
+                }
+
+                .text-danger {
+                    color: #dc3545 !important;
+                }
+
+                /* Si quieres resaltar el borde del input cuando hay error */
+                input.form-control:has(+ .text-danger) {
+                    border-color: #dc3545;
+                }
+            }
+            
+            /* Estilos para los mensajes de error */
+            .text-danger {
+                color: #ffffff !important; /* Texto blanco para mayor contraste */
+                background-color: rgba(220, 53, 69, 0.7); /* Fondo rojo semi-transparente */
+                border-radius: 4px;
+                padding: 5px 8px;
+                margin-top: 5px;
+                font-size: 14px;
+                display: block; /* Para que ocupe su propio espacio */
+                animation: fadeIn 0.3s ease-in; /* Animación suave */
+            }
+
+            @keyframes fadeIn {
+                from { opacity: 0; transform: translateY(-5px); }
+                to { opacity: 1; transform: translateY(0); }
+            }
+
+            /* Resaltar el input con error */
+            .form-control.is-invalid,
+            input.form-control:has(+ .text-danger) {
+                border-color: #f8d7da !important;
+                border-bottom: 2px solid #f8d7da !important;
+                box-shadow: 0 0 0 2px rgba(220, 53, 69, 0.25);
+            }
+            
+            /* Estilo para el mensaje de éxito */
+            .alert-success {
+                background-color: #FF7033;
+                color: white;
+                border-radius: 4px;
+                padding: 10px 15px;
+                margin-top: 15px;
+                text-align: center;
+                animation: fadeIn 0.5s ease;
+                border: none;
+            }
+
+            /* Agregar estos estilos a tu sección de CSS */
+
+            .submit-button:disabled {
+                opacity: 0.6 !important;
+                cursor: not-allowed !important;
+                background-color: #e0e0e0 !important;
+                transform: none !important;
+                box-shadow: none !important;
+            }
+
+            .submit-button:disabled:hover {
+                background-color: #e0e0e0 !important;
+                transform: none !important;
+                box-shadow: none !important;
+            }
+
+            /* Estilos para campos válidos */
+            .form-control.valid {
+                border-bottom: 2px solid #FF7033 !important;
+            }
+
+            /* Animación suave al habilitar el botón */
+            .submit-button {
+                transition: opacity 0.3s ease, background-color 0.3s ease, transform 0.3s ease, box-shadow 0.3s ease;
             }
         </style>
     </head>
@@ -631,17 +707,17 @@
                     <div class="location-group">
                         <span class="header-location">Espumas medellín</span>
                         <div class="social-icons">
-                            <a href="#" class="social-icon">
+                            <a href="https://www.facebook.com/AuxsisESPM" class="social-icon" target="_blank" rel="noopener noreferrer">
                                 <svg width="14" height="14" viewBox="0 0 24 24" fill="#FF7033">
                                     <path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/>
                                 </svg>
                             </a>
-                            <a href="#" class="social-icon">
+                            <a href="https://www.instagram.com/espumasmedellin/" class="social-icon" target="_blank" rel="noopener noreferrer">
                                 <svg width="14" height="14" viewBox="0 0 24 24" fill="#FF7033">
                                     <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z"/>
                                 </svg>
                             </a>
-                            <a href="#" class="social-icon">
+                            <a href="https://www.linkedin.com/company/espumas-medellin/" class="social-icon" target="_blank" rel="noopener noreferrer">
                                 <svg width="14" height="14" viewBox="0 0 24 24" fill="#FF7033">
                                     <path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/>
                                 </svg>
@@ -652,17 +728,17 @@
                     <div class="location-group">
                         <span class="header-location">Espumados del Litoral</span>
                         <div class="social-icons">
-                            <a href="#" class="social-icon">
+                            <a href="https://www.facebook.com/profile.php?id=61571445715819" class="social-icon" target="_blank" rel="noopener noreferrer">
                                 <svg width="14" height="14" viewBox="0 0 24 24" fill="#FF7033">
                                     <path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/>
                                 </svg>
                             </a>
-                            <a href="#" class="social-icon">
+                            <a href="https://www.instagram.com/espumadosdellitoral_/" class="social-icon" target="_blank" rel="noopener noreferrer">
                                 <svg width="14" height="14" viewBox="0 0 24 24" fill="#FF7033">
                                     <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z"/>
                                 </svg>
                             </a>
-                            <a href="#" class="social-icon">
+                            <a href="https://www.linkedin.com/company/espumados-del-litoral-s-a-la-original/" class="social-icon" target="_blank" rel="noopener noreferrer">
                                 <svg width="14" height="14" viewBox="0 0 24 24" fill="#FF7033">
                                     <path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/>
                                 </svg>
@@ -696,89 +772,306 @@
                 <h1 class="form-title">¡OBTÉN TU KIT DEL SUEÑO GRATIS!</h1>
                 <p class="form-subtitle">Solo ingresa tus datos y comienza a dormir mejor.</p>
                 
-                <form action="#" method="POST">
+                <form action="{{ route('unirse.store') }}" method="POST" novalidate>
                     @csrf
                     <div class="form-group">
-                        <input type="text" name="nombre" placeholder="Nombre completo" class="form-control" required>
+                        <input type="text" name="nombre" placeholder="Nombre completo" class="form-control" required value="{{ old('nombre') }}">
+                        @error('nombre')
+                            <div class="text-danger">{{ $message }}</div>
+                        @enderror
                     </div>
                     
                     <div class="form-group">
-                        <input type="email" name="email" placeholder="E-mail" class="form-control" required>
+                        <input type="email" name="email" placeholder="E-mail" class="form-control" required value="{{ old('email') }}">
+                        @error('email')
+                            <div class="text-danger">{{ $message }}</div>
+                        @enderror
                     </div>
                     
                     <div class="form-group">
-                        <input type="tel" name="celular" placeholder="Celular" class="form-control" required>
+                        <input type="tel" name="celular" placeholder="Celular" class="form-control" required value="{{ old('celular') }}">
+                        @error('celular')
+                            <div class="text-danger">{{ $message }}</div>
+                        @enderror
                     </div>
                     
-                    <button type="submit" class="submit-button">
+                    <button type="submit" class="submit-button" disabled>
                         <span>ÚNETE A LA LIGA DE LOS SUEÑOS</span>
-                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="margin-right: 8px; vertical-align: middle;">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                             <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
                             <polyline points="7 10 12 15 17 10"></polyline>
                             <line x1="12" y1="15" x2="12" y2="3"></line>
                         </svg>
                     </button>
+                    
+                    @if(session('success'))
+                        <div class="alert alert-success mt-3">
+                            {{ session('success') }}
+                        </div>
+                    @endif
                 </form>
             </div>
         </div>
 
-        <!-- Continuación del archivo HTML previo -->
-
-<script>
-    let slideIndex = 0;
-    const slides = document.querySelectorAll('.slide');
-    const dots = document.querySelectorAll('.slider-dot');
-    
-    function showSlide(n) {
-        if (n >= slides.length) slideIndex = 0;
-        if (n < 0) slideIndex = slides.length - 1;
-        
-        // Usar translateX con un valor exacto
-        document.querySelector('.slider').style.transform = `translateX(-${slideIndex * 100}%)`;
-        
-        // Actualizar los dots
-        dots.forEach(dot => dot.classList.remove('active'));
-        dots[slideIndex].classList.add('active');
-    }
-    
-    function moveSlide(n) {
-        showSlide(slideIndex += n);
-    }
-    
-    function currentSlide(n) {
-        showSlide(slideIndex = n);
-    }
-    
-    // Iniciar el slider
-    showSlide(slideIndex);
-    
-    // Autorotación del slider cada 10 segundos
-    setInterval(() => {
-        moveSlide(1);
-    }, 10000);
-    
-    // Ajustar elementos al cambiar tamaño de ventana
-    window.addEventListener('resize', function() {
-        // Recalcular altura del slider en dispositivos móviles
-        if (window.innerWidth <= 768) {
-            const viewportHeight = window.innerHeight;
-            const sliderContainer = document.querySelector('.slider-container');
-            sliderContainer.style.height = `${viewportHeight * 0.35}px`;
-        }
-    });
-    
-    // Mejorar carga de imágenes
-    document.addEventListener('DOMContentLoaded', function() {
-        const images = document.querySelectorAll('.hero-image');
-        images.forEach(img => {
-            img.addEventListener('load', function() {
-                this.style.opacity = 1;
+        <!-- Scripts para el slider y la validación del formulario -->
+        <script>
+            let slideIndex = 0;
+            const slides = document.querySelectorAll('.slide');
+            const dots = document.querySelectorAll('.slider-dot');
+            
+            function showSlide(n) {
+                if (n >= slides.length) slideIndex = 0;
+                if (n < 0) slideIndex = slides.length - 1;
+                
+                // Usar translateX con un valor exacto
+                document.querySelector('.slider').style.transform = `translateX(-${slideIndex * 100}%)`;
+                
+                // Actualizar los dots
+                dots.forEach(dot => dot.classList.remove('active'));
+                dots[slideIndex].classList.add('active');
+            }
+            
+            function moveSlide(n) {
+                showSlide(slideIndex += n);
+            }
+            
+            function currentSlide(n) {
+                showSlide(slideIndex = n);
+            }
+            
+            // Iniciar el slider
+            showSlide(slideIndex);
+            
+            // Autorotación del slider cada 10 segundos
+            setInterval(() => {
+                moveSlide(1);
+            }, 10000);
+            
+            // Ajustar elementos al cambiar tamaño de ventana
+            window.addEventListener('resize', function() {
+                // Recalcular altura del slider en dispositivos móviles
+                if (window.innerWidth <= 768) {
+                    const viewportHeight = window.innerHeight;
+                    const sliderContainer = document.querySelector('.slider-container');
+                    sliderContainer.style.height = `${viewportHeight * 0.35}px`;
+                }
             });
-            // Iniciar con opacidad 0 y transición
-            img.style.opacity = 0;
-            img.style.transition = 'opacity 0.5s ease';
-        });
-    });
-</script>
-</body>
+            
+            // Todo el código se ejecuta cuando el DOM está completamente cargado
+            document.addEventListener('DOMContentLoaded', function() {
+                // Mejora de carga de imágenes
+                const images = document.querySelectorAll('.hero-image');
+                images.forEach(img => {
+                    img.addEventListener('load', function() {
+                        this.style.opacity = 1;
+                    });
+                    // Iniciar con opacidad 0 y transición
+                    img.style.opacity = 0;
+                    img.style.transition = 'opacity 0.5s ease';
+                });
+                
+                // Referencias a los elementos del formulario
+                const form = document.querySelector('form');
+                const submitButton = document.querySelector('.submit-button');
+                const nombreInput = document.querySelector('input[name="nombre"]');
+                const emailInput = document.querySelector('input[name="email"]');
+                const celularInput = document.querySelector('input[name="celular"]');
+                
+                // Estado de validación para cada campo
+                let isNombreValid = false;
+                let isEmailValid = false;
+                let isCelularValid = false;
+                
+                // Función para validar un campo individual
+                function validateField(input, validationFunction) {
+                    // Eliminar mensajes previos de error
+                    const prevError = input.nextElementSibling;
+                    if (prevError && prevError.classList.contains('text-danger')) {
+                        prevError.remove();
+                    }
+                    
+                    // Quitar clase de inválido y añadir clase de válido si corresponde
+                    input.classList.remove('is-invalid');
+                    input.classList.remove('valid');
+                    
+                    // Si el campo está vacío, retorna false (no válido)
+                    if (!input.value.trim()) {
+                        const errorDiv = document.createElement('div');
+                        errorDiv.classList.add('text-danger');
+                        errorDiv.textContent = 'Este campo es obligatorio.';
+                        input.after(errorDiv);
+                        input.classList.add('is-invalid');
+                        return false;
+                    }
+                    
+                    // Validación específica según el campo
+                    const validationResult = validationFunction(input.value.trim());
+                    if (!validationResult.isValid) {
+                        const errorDiv = document.createElement('div');
+                        errorDiv.classList.add('text-danger');
+                        errorDiv.textContent = validationResult.message;
+                        input.after(errorDiv);
+                        input.classList.add('is-invalid');
+                        return false;
+                    }
+                    
+                    // Si llegamos aquí, el campo es válido
+                    input.classList.add('valid');
+                    return true;
+                }
+                
+                // Validadores específicos para cada campo
+                function validateNombre(value) {
+                    return {
+                        isValid: value.length > 0 && value.length <= 255,
+                        message: 'El nombre no puede tener más de 255 caracteres.'
+                    };
+                }
+                
+                function validateEmail(value) {
+                    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+                    return {
+                        isValid: emailRegex.test(value),
+                        message: 'Ingresa una dirección de correo electrónico válida.'
+                    };
+                }
+                
+                function validateCelular(value) {
+                    const celularRegex = /^3\d{9}$/; // Comienza con 3 y tiene exactamente 10 dígitos
+                    return {
+                        isValid: celularRegex.test(value),
+                        message: 'El número de celular debe comenzar con 3 y tener 10 dígitos.'
+                    };
+                }
+                
+                // Función para actualizar el estado del botón
+                function updateButtonState() {
+                    if (isNombreValid && isEmailValid && isCelularValid) {
+                        submitButton.disabled = false;
+                        submitButton.style.opacity = '1';
+                        submitButton.style.cursor = 'pointer';
+                    } else {
+                        submitButton.disabled = true;
+                        submitButton.style.opacity = '0.6';
+                        submitButton.style.cursor = 'not-allowed';
+                    }
+                }
+                
+                // Eventos para validar cada campo al perder el foco (blur)
+                nombreInput.addEventListener('blur', function() {
+                    isNombreValid = validateField(nombreInput, validateNombre);
+                    updateButtonState();
+                });
+                
+                emailInput.addEventListener('blur', function() {
+                    isEmailValid = validateField(emailInput, validateEmail);
+                    updateButtonState();
+                });
+                
+                celularInput.addEventListener('blur', function() {
+                    isCelularValid = validateField(celularInput, validateCelular);
+                    updateButtonState();
+                });
+                
+                // También validar cuando cambia el contenido para una experiencia más interactiva
+                // Pero solo si el campo ya fue marcado como inválido
+                nombreInput.addEventListener('input', function() {
+                    if (nombreInput.classList.contains('is-invalid')) {
+                        isNombreValid = validateField(nombreInput, validateNombre);
+                        updateButtonState();
+                    }
+                });
+                
+                emailInput.addEventListener('input', function() {
+                    if (emailInput.classList.contains('is-invalid')) {
+                        isEmailValid = validateField(emailInput, validateEmail);
+                        updateButtonState();
+                    }
+                });
+                
+                celularInput.addEventListener('input', function() {
+                    if (celularInput.classList.contains('is-invalid')) {
+                        isCelularValid = validateField(celularInput, validateCelular);
+                        updateButtonState();
+                    }
+                });
+                
+                // Prevenir el envío del formulario si hay campos no validados
+                form.addEventListener('submit', function(event) {
+                    // Validar los campos que aún no se han validado
+                    if (!isNombreValid) {
+                        isNombreValid = validateField(nombreInput, validateNombre);
+                    }
+                    
+                    if (!isEmailValid) {
+                        isEmailValid = validateField(emailInput, validateEmail);
+                    }
+                    
+                    if (!isCelularValid) {
+                        isCelularValid = validateField(celularInput, validateCelular);
+                    }
+                    
+                    updateButtonState();
+                    
+                    // Si alguno no es válido, prevenir envío
+                    if (!isNombreValid || !isEmailValid || !isCelularValid) {
+                        event.preventDefault();
+                        return;
+                    }
+                    
+                    // Si el formulario es válido, iniciar la descarga del PDF
+                    downloadPDF();
+                    
+                    // El formulario se enviará normalmente
+                });
+                
+                // Función para descargar el PDF
+                function downloadPDF() {
+                    // Ruta al PDF existente - ajusta esta ruta a la ubicación real de tu PDF
+                    const pdfUrl = "{{ asset('pdf/kit-del-sueno.pdf') }}";
+                    
+                    // Crear un enlace invisible
+                    const link = document.createElement('a');
+                    link.href = pdfUrl;
+                    link.download = 'kit-del-sueno.pdf';
+                    link.target = '_blank';
+                    
+                    // Añadir al DOM, hacer clic y eliminar
+                    document.body.appendChild(link);
+                    link.click();
+                    
+                    // Eliminar después de un breve tiempo
+                    setTimeout(() => {
+                        document.body.removeChild(link);
+                    }, 100);
+                }
+                
+                // Marcar campos con error como inválidos (para errores del servidor)
+                const errorMessages = document.querySelectorAll('.text-danger');
+                errorMessages.forEach(function(errorMsg) {
+                    const inputField = errorMsg.previousElementSibling;
+                    if (inputField && inputField.classList.contains('form-control')) {
+                        inputField.classList.add('is-invalid');
+                        
+                        // Actualizar estados de validación para campos con errores del servidor
+                        if (inputField.name === 'nombre') isNombreValid = false;
+                        if (inputField.name === 'email') isEmailValid = false;
+                        if (inputField.name === 'celular') isCelularValid = false;
+                    }
+                });
+                
+                // Muestra alertas de éxito temporalmente
+                const successAlert = document.querySelector('.alert-success');
+                if (successAlert) {
+                    setTimeout(function() {
+                        successAlert.style.transition = 'opacity 0.5s ease';
+                        successAlert.style.opacity = '0';
+                        setTimeout(function() {
+                            successAlert.style.display = 'none';
+                        }, 500);
+                    }, 5000); // Desaparece después de 5 segundos
+                }
+            });
+        </script>
+    </body>
 </html>
