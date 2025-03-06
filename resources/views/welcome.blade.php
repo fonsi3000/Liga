@@ -1002,25 +1002,68 @@
             }
         });
         
-        // Función para descargar el PDF
+        // Función universal para descargar el PDF (compatible con móviles y escritorio)
         function downloadPDF() {
-            // Ruta al PDF existente - ajusta esta ruta a la ubicación real de tu PDF
+            // Ruta al PDF existente
             const pdfUrl = "{{ asset('pdf/kit-del-sueno.pdf') }}";
             
-            // Crear un enlace invisible
+            // 1. Intento de descarga automática (funciona mejor en escritorio)
+            // Crear un iframe oculto para intentar descargar automáticamente
+            const iframe = document.createElement('iframe');
+            iframe.style.display = 'none';
+            iframe.src = pdfUrl;
+            document.body.appendChild(iframe);
+            
+            // También usar el método tradicional como respaldo
             const link = document.createElement('a');
             link.href = pdfUrl;
             link.download = 'kit-del-sueno.pdf';
             link.target = '_blank';
-            
-            // Añadir al DOM, hacer clic y eliminar
             document.body.appendChild(link);
             link.click();
             
-            // Eliminar después de un breve tiempo
+            // Eliminar elementos después de un breve tiempo
             setTimeout(() => {
-                document.body.removeChild(link);
+                if (document.body.contains(link)) document.body.removeChild(link);
             }, 100);
+            
+            // 2. Proporcionar botón explícito como respaldo (funciona en todos los dispositivos)
+            const downloadMsg = document.createElement('div');
+            downloadMsg.classList.add('alert', 'alert-info', 'mt-3');
+            downloadMsg.id = 'download-message';
+            downloadMsg.innerHTML = `
+                <p><strong>¡Tu Kit del Sueño está listo!</strong></p>
+                <p>Si la descarga no inicia automáticamente:</p>
+                <p><a href="${pdfUrl}" class="btn btn-primary" download="kit-del-sueno.pdf" target="_blank">
+                    Haz clic aquí para descargar
+                </a></p>
+            `;
+            
+            // Evitar duplicados eliminando mensajes anteriores
+            const existingMsg = document.getElementById('download-message');
+            if (existingMsg && existingMsg.parentNode) {
+                existingMsg.parentNode.removeChild(existingMsg);
+            }
+            
+            // Insertar el nuevo mensaje después del mensaje de éxito
+            const successMsg = document.getElementById('success-message');
+            if (successMsg) {
+                successMsg.parentNode.insertBefore(downloadMsg, successMsg.nextSibling);
+            } else {
+                // Si no hay mensaje de éxito, añadir después del formulario
+                const form = document.querySelector('form');
+                if (form) {
+                    form.parentNode.insertBefore(downloadMsg, form.nextSibling);
+                }
+            }
+            
+            // Eliminar iframe después de 5 segundos (ya habrá hecho su trabajo)
+            setTimeout(() => {
+                if (document.body.contains(iframe)) document.body.removeChild(iframe);
+            }, 5000);
+            
+            // No eliminaremos el mensaje con el botón de descarga,
+            // ya que el usuario puede necesitarlo para descargar el PDF
         }
         
         // AJAX para el envío del formulario sin cambiar de página
