@@ -38,7 +38,15 @@ class UsuarioController extends Controller
         // Guardar en la base de datos
         Usuario::create($validated);
 
-        // Redireccionar con mensaje
+        // Responder según el tipo de solicitud
+        if ($request->ajax() || $request->wantsJson()) {
+            return response()->json([
+                'success' => true,
+                'message' => '¡Te has unido a la Liga de los Sueños!'
+            ]);
+        }
+
+        // Respuesta tradicional para solicitudes no-AJAX
         return redirect()->back()->with('success', '¡Te has unido a la Liga de los Sueños!');
     }
 }

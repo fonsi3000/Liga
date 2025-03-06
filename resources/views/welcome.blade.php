@@ -726,7 +726,7 @@
                     </div>
                     
                     <div class="location-group">
-                        <span class="header-location">Espumados del Litorall</span>
+                        <span class="header-location">Espumados del Litoral</span>
                         <div class="social-icons">
                             <a href="https://www.facebook.com/profile.php?id=61571445715819" class="social-icon" target="_blank" rel="noopener noreferrer">
                                 <svg width="14" height="14" viewBox="0 0 24 24" fill="#FF7033">
@@ -772,31 +772,34 @@
                 <h1 class="form-title">¡OBTÉN TU KIT DEL SUEÑO GRATIS!</h1>
                 <p class="form-subtitle">Solo ingresa tus datos y comienza a dormir mejor.</p>
                 
-                <form action="{{ route('unirse.store') }}" method="POST" novalidate>
+                <form id="dreamLeagueForm" action="{{ route('unirse.store') }}" method="POST" autocomplete="on" class="dream-form">
                     @csrf
                     <div class="form-group">
-                        <input type="text" name="nombre" placeholder="Nombre completo" class="form-control" required value="{{ old('nombre') }}">
+                        <input type="text" name="nombre" placeholder="Nombre completo" class="form-control" 
+                               required value="{{ old('nombre') }}" autocomplete="name">
                         @error('nombre')
                             <div class="text-danger">{{ $message }}</div>
                         @enderror
                     </div>
                     
                     <div class="form-group">
-                        <input type="email" name="email" placeholder="E-mail" class="form-control" required value="{{ old('email') }}">
+                        <input type="email" name="email" placeholder="E-mail" class="form-control" 
+                               required value="{{ old('email') }}" autocomplete="email">
                         @error('email')
                             <div class="text-danger">{{ $message }}</div>
                         @enderror
                     </div>
                     
                     <div class="form-group">
-                        <input type="tel" name="celular" placeholder="Celular" class="form-control" required value="{{ old('celular') }}">
+                        <input type="tel" name="celular" placeholder="Celular" class="form-control" 
+                               required value="{{ old('celular') }}" autocomplete="tel">
                         @error('celular')
                             <div class="text-danger">{{ $message }}</div>
                         @enderror
                     </div>
                     
                     <button type="submit" class="submit-button" disabled>
-                        <span>ÚNETE A LA LIGA DE LOS SUEÑOS</span>
+                        <span>OBTÉN TU KIT DEL SUEÑO GRATIS</span>
                         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                             <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
                             <polyline points="7 10 12 15 17 10"></polyline>
@@ -809,269 +812,353 @@
                             {{ session('success') }}
                         </div>
                     @endif
+                    
+                    <div class="alert alert-success mt-3" id="success-message" style="display: none;"></div>
                 </form>
             </div>
         </div>
 
-        <!-- Scripts para el slider y la validación del formulario -->
-        <script>
-            let slideIndex = 0;
-            const slides = document.querySelectorAll('.slide');
-            const dots = document.querySelectorAll('.slider-dot');
-            
-            function showSlide(n) {
-                if (n >= slides.length) slideIndex = 0;
-                if (n < 0) slideIndex = slides.length - 1;
-                
-                // Usar translateX con un valor exacto
-                document.querySelector('.slider').style.transform = `translateX(-${slideIndex * 100}%)`;
-                
-                // Actualizar los dots
-                dots.forEach(dot => dot.classList.remove('active'));
-                dots[slideIndex].classList.add('active');
-            }
-            
-            function moveSlide(n) {
-                showSlide(slideIndex += n);
-            }
-            
-            function currentSlide(n) {
-                showSlide(slideIndex = n);
-            }
-            
-            // Iniciar el slider
-            showSlide(slideIndex);
-            
-            // Autorotación del slider cada 10 segundos
-            setInterval(() => {
-                moveSlide(1);
-            }, 10000);
-            
-            // Ajustar elementos al cambiar tamaño de ventana
-            window.addEventListener('resize', function() {
-                // Recalcular altura del slider en dispositivos móviles
-                if (window.innerWidth <= 768) {
-                    const viewportHeight = window.innerHeight;
-                    const sliderContainer = document.querySelector('.slider-container');
-                    sliderContainer.style.height = `${viewportHeight * 0.35}px`;
-                }
+       <!-- Scripts para el slider y la validación del formulario -->
+<script>
+    let slideIndex = 0;
+    const slides = document.querySelectorAll('.slide');
+    const dots = document.querySelectorAll('.slider-dot');
+    
+    function showSlide(n) {
+        if (n >= slides.length) slideIndex = 0;
+        if (n < 0) slideIndex = slides.length - 1;
+        
+        // Usar translateX con un valor exacto
+        document.querySelector('.slider').style.transform = `translateX(-${slideIndex * 100}%)`;
+        
+        // Actualizar los dots
+        dots.forEach(dot => dot.classList.remove('active'));
+        dots[slideIndex].classList.add('active');
+    }
+    
+    function moveSlide(n) {
+        showSlide(slideIndex += n);
+    }
+    
+    function currentSlide(n) {
+        showSlide(slideIndex = n);
+    }
+    
+    // Iniciar el slider
+    showSlide(slideIndex);
+    
+    // Autorotación del slider cada 10 segundos
+    setInterval(() => {
+        moveSlide(1);
+    }, 10000);
+    
+    // Ajustar elementos al cambiar tamaño de ventana
+    window.addEventListener('resize', function() {
+        // Recalcular altura del slider en dispositivos móviles
+        if (window.innerWidth <= 768) {
+            const viewportHeight = window.innerHeight;
+            const sliderContainer = document.querySelector('.slider-container');
+            sliderContainer.style.height = `${viewportHeight * 0.35}px`;
+        }
+    });
+    
+    // Todo el código se ejecuta cuando el DOM está completamente cargado
+    document.addEventListener('DOMContentLoaded', function() {
+        // Mejora de carga de imágenes
+        const images = document.querySelectorAll('.hero-image');
+        images.forEach(img => {
+            img.addEventListener('load', function() {
+                this.style.opacity = 1;
             });
+            // Iniciar con opacidad 0 y transición
+            img.style.opacity = 0;
+            img.style.transition = 'opacity 0.5s ease';
+        });
+        
+        // Referencias a los elementos del formulario
+        const form = document.querySelector('form');
+        const submitButton = document.querySelector('.submit-button');
+        const nombreInput = document.querySelector('input[name="nombre"]');
+        const emailInput = document.querySelector('input[name="email"]');
+        const celularInput = document.querySelector('input[name="celular"]');
+        const successMessage = document.getElementById('success-message');
+        
+        // Estado de validación para cada campo
+        let isNombreValid = false;
+        let isEmailValid = false;
+        let isCelularValid = false;
+        
+        // Función para validar un campo individual
+        function validateField(input, validationFunction) {
+            // Eliminar mensajes previos de error
+            const prevError = input.nextElementSibling;
+            if (prevError && prevError.classList.contains('text-danger')) {
+                prevError.remove();
+            }
             
-            // Todo el código se ejecuta cuando el DOM está completamente cargado
-            document.addEventListener('DOMContentLoaded', function() {
-                // Mejora de carga de imágenes
-                const images = document.querySelectorAll('.hero-image');
-                images.forEach(img => {
-                    img.addEventListener('load', function() {
-                        this.style.opacity = 1;
-                    });
-                    // Iniciar con opacidad 0 y transición
-                    img.style.opacity = 0;
-                    img.style.transition = 'opacity 0.5s ease';
-                });
-                
-                // Referencias a los elementos del formulario
-                const form = document.querySelector('form');
-                const submitButton = document.querySelector('.submit-button');
-                const nombreInput = document.querySelector('input[name="nombre"]');
-                const emailInput = document.querySelector('input[name="email"]');
-                const celularInput = document.querySelector('input[name="celular"]');
-                
-                // Estado de validación para cada campo
-                let isNombreValid = false;
-                let isEmailValid = false;
-                let isCelularValid = false;
-                
-                // Función para validar un campo individual
-                function validateField(input, validationFunction) {
-                    // Eliminar mensajes previos de error
-                    const prevError = input.nextElementSibling;
-                    if (prevError && prevError.classList.contains('text-danger')) {
-                        prevError.remove();
-                    }
-                    
-                    // Quitar clase de inválido y añadir clase de válido si corresponde
-                    input.classList.remove('is-invalid');
-                    input.classList.remove('valid');
-                    
-                    // Si el campo está vacío, retorna false (no válido)
-                    if (!input.value.trim()) {
-                        const errorDiv = document.createElement('div');
-                        errorDiv.classList.add('text-danger');
-                        errorDiv.textContent = 'Este campo es obligatorio.';
-                        input.after(errorDiv);
-                        input.classList.add('is-invalid');
-                        return false;
-                    }
-                    
-                    // Validación específica según el campo
-                    const validationResult = validationFunction(input.value.trim());
-                    if (!validationResult.isValid) {
-                        const errorDiv = document.createElement('div');
-                        errorDiv.classList.add('text-danger');
-                        errorDiv.textContent = validationResult.message;
-                        input.after(errorDiv);
-                        input.classList.add('is-invalid');
-                        return false;
-                    }
-                    
-                    // Si llegamos aquí, el campo es válido
-                    input.classList.add('valid');
-                    return true;
+            // Quitar clase de inválido y añadir clase de válido si corresponde
+            input.classList.remove('is-invalid');
+            input.classList.remove('valid');
+            
+            // Si el campo está vacío, retorna false (no válido)
+            if (!input.value.trim()) {
+                const errorDiv = document.createElement('div');
+                errorDiv.classList.add('text-danger');
+                errorDiv.textContent = 'Este campo es obligatorio.';
+                input.after(errorDiv);
+                input.classList.add('is-invalid');
+                return false;
+            }
+            
+            // Validación específica según el campo
+            const validationResult = validationFunction(input.value.trim());
+            if (!validationResult.isValid) {
+                const errorDiv = document.createElement('div');
+                errorDiv.classList.add('text-danger');
+                errorDiv.textContent = validationResult.message;
+                input.after(errorDiv);
+                input.classList.add('is-invalid');
+                return false;
+            }
+            
+            // Si llegamos aquí, el campo es válido
+            input.classList.add('valid');
+            return true;
+        }
+        
+        // Validadores específicos para cada campo
+        function validateNombre(value) {
+            return {
+                isValid: value.length > 0 && value.length <= 255,
+                message: 'El nombre no puede tener más de 255 caracteres.'
+            };
+        }
+        
+        function validateEmail(value) {
+            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            return {
+                isValid: emailRegex.test(value),
+                message: 'Ingresa una dirección de correo electrónico válida.'
+            };
+        }
+        
+        function validateCelular(value) {
+            const celularRegex = /^3\d{9}$/; // Comienza con 3 y tiene exactamente 10 dígitos
+            return {
+                isValid: celularRegex.test(value),
+                message: 'El número de celular debe comenzar con 3 y tener 10 dígitos.'
+            };
+        }
+        
+        // Función para actualizar el estado del botón
+        function updateButtonState() {
+            if (isNombreValid && isEmailValid && isCelularValid) {
+                submitButton.disabled = false;
+                submitButton.style.opacity = '1';
+                submitButton.style.cursor = 'pointer';
+            } else {
+                submitButton.disabled = true;
+                submitButton.style.opacity = '0.6';
+                submitButton.style.cursor = 'not-allowed';
+            }
+        }
+        
+        // Eventos para validar cada campo al perder el foco (blur)
+        nombreInput.addEventListener('blur', function() {
+            isNombreValid = validateField(nombreInput, validateNombre);
+            updateButtonState();
+        });
+        
+        emailInput.addEventListener('blur', function() {
+            isEmailValid = validateField(emailInput, validateEmail);
+            updateButtonState();
+        });
+        
+        celularInput.addEventListener('blur', function() {
+            isCelularValid = validateField(celularInput, validateCelular);
+            updateButtonState();
+        });
+        
+        // También validar cuando cambia el contenido para una experiencia más interactiva
+        // Pero solo si el campo ya fue marcado como inválido
+        nombreInput.addEventListener('input', function() {
+            if (nombreInput.classList.contains('is-invalid')) {
+                isNombreValid = validateField(nombreInput, validateNombre);
+                updateButtonState();
+            }
+        });
+        
+        emailInput.addEventListener('input', function() {
+            if (emailInput.classList.contains('is-invalid')) {
+                isEmailValid = validateField(emailInput, validateEmail);
+                updateButtonState();
+            }
+        });
+        
+        celularInput.addEventListener('input', function() {
+            if (celularInput.classList.contains('is-invalid')) {
+                isCelularValid = validateField(celularInput, validateCelular);
+                updateButtonState();
+            }
+        });
+        
+        // Función para descargar el PDF
+        function downloadPDF() {
+            // Ruta al PDF existente - ajusta esta ruta a la ubicación real de tu PDF
+            const pdfUrl = "{{ asset('pdf/kit-del-sueno.pdf') }}";
+            
+            // Crear un enlace invisible
+            const link = document.createElement('a');
+            link.href = pdfUrl;
+            link.download = 'kit-del-sueno.pdf';
+            link.target = '_blank';
+            
+            // Añadir al DOM, hacer clic y eliminar
+            document.body.appendChild(link);
+            link.click();
+            
+            // Eliminar después de un breve tiempo
+            setTimeout(() => {
+                document.body.removeChild(link);
+            }, 100);
+        }
+        
+        // AJAX para el envío del formulario sin cambiar de página
+        form.addEventListener('submit', function(event) {
+            event.preventDefault(); // Prevenir el envío normal del formulario
+            
+            // Validar los campos que aún no se han validado
+            if (!isNombreValid) {
+                isNombreValid = validateField(nombreInput, validateNombre);
+            }
+            
+            if (!isEmailValid) {
+                isEmailValid = validateField(emailInput, validateEmail);
+            }
+            
+            if (!isCelularValid) {
+                isCelularValid = validateField(celularInput, validateCelular);
+            }
+            
+            updateButtonState();
+            
+            // Si alguno no es válido, prevenir envío
+            if (!isNombreValid || !isEmailValid || !isCelularValid) {
+                return;
+            }
+            
+            // Deshabilitar botón durante el envío
+            submitButton.disabled = true;
+            submitButton.style.opacity = '0.6';
+            
+            // Crear objeto FormData con los datos del formulario
+            const formData = new FormData(form);
+            
+            // Petición AJAX
+            fetch(form.action, {
+                method: 'POST',
+                body: formData,
+                headers: {
+                    'X-Requested-With': 'XMLHttpRequest',
+                    'Accept': 'application/json'
+                },
+                redirect: 'manual' // No seguir redirecciones
+            })
+            .then(response => {
+                if (response.redirected) {
+                    return { success: true, message: '¡Te has unido a la Liga de los Sueños!' };
                 }
-                
-                // Validadores específicos para cada campo
-                function validateNombre(value) {
-                    return {
-                        isValid: value.length > 0 && value.length <= 255,
-                        message: 'El nombre no puede tener más de 255 caracteres.'
-                    };
-                }
-                
-                function validateEmail(value) {
-                    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-                    return {
-                        isValid: emailRegex.test(value),
-                        message: 'Ingresa una dirección de correo electrónico válida.'
-                    };
-                }
-                
-                function validateCelular(value) {
-                    const celularRegex = /^3\d{9}$/; // Comienza con 3 y tiene exactamente 10 dígitos
-                    return {
-                        isValid: celularRegex.test(value),
-                        message: 'El número de celular debe comenzar con 3 y tener 10 dígitos.'
-                    };
-                }
-                
-                // Función para actualizar el estado del botón
-                function updateButtonState() {
-                    if (isNombreValid && isEmailValid && isCelularValid) {
-                        submitButton.disabled = false;
-                        submitButton.style.opacity = '1';
-                        submitButton.style.cursor = 'pointer';
-                    } else {
-                        submitButton.disabled = true;
-                        submitButton.style.opacity = '0.6';
-                        submitButton.style.cursor = 'not-allowed';
-                    }
-                }
-                
-                // Eventos para validar cada campo al perder el foco (blur)
-                nombreInput.addEventListener('blur', function() {
-                    isNombreValid = validateField(nombreInput, validateNombre);
-                    updateButtonState();
-                });
-                
-                emailInput.addEventListener('blur', function() {
-                    isEmailValid = validateField(emailInput, validateEmail);
-                    updateButtonState();
-                });
-                
-                celularInput.addEventListener('blur', function() {
-                    isCelularValid = validateField(celularInput, validateCelular);
-                    updateButtonState();
-                });
-                
-                // También validar cuando cambia el contenido para una experiencia más interactiva
-                // Pero solo si el campo ya fue marcado como inválido
-                nombreInput.addEventListener('input', function() {
-                    if (nombreInput.classList.contains('is-invalid')) {
-                        isNombreValid = validateField(nombreInput, validateNombre);
-                        updateButtonState();
-                    }
-                });
-                
-                emailInput.addEventListener('input', function() {
-                    if (emailInput.classList.contains('is-invalid')) {
-                        isEmailValid = validateField(emailInput, validateEmail);
-                        updateButtonState();
-                    }
-                });
-                
-                celularInput.addEventListener('input', function() {
-                    if (celularInput.classList.contains('is-invalid')) {
-                        isCelularValid = validateField(celularInput, validateCelular);
-                        updateButtonState();
-                    }
-                });
-                
-                // Prevenir el envío del formulario si hay campos no validados
-                form.addEventListener('submit', function(event) {
-                    // Validar los campos que aún no se han validado
-                    if (!isNombreValid) {
-                        isNombreValid = validateField(nombreInput, validateNombre);
+                return response.json();
+            })
+            .then(data => {
+                if (data.success) {
+                    // Mostrar mensaje de éxito
+                    if (successMessage) {
+                        successMessage.textContent = data.message || '¡Te has unido a la Liga de los Sueños!';
+                        successMessage.style.display = 'block';
                     }
                     
-                    if (!isEmailValid) {
-                        isEmailValid = validateField(emailInput, validateEmail);
-                    }
+                    // Limpiar formulario
+                    form.reset();
                     
-                    if (!isCelularValid) {
-                        isCelularValid = validateField(celularInput, validateCelular);
-                    }
-                    
-                    updateButtonState();
-                    
-                    // Si alguno no es válido, prevenir envío
-                    if (!isNombreValid || !isEmailValid || !isCelularValid) {
-                        event.preventDefault();
-                        return;
-                    }
-                    
-                    // Si el formulario es válido, iniciar la descarga del PDF
+                    // Descargar PDF
                     downloadPDF();
                     
-                    // El formulario se enviará normalmente
-                });
-                
-                // Función para descargar el PDF
-                function downloadPDF() {
-                    // Ruta al PDF existente - ajusta esta ruta a la ubicación real de tu PDF
-                    const pdfUrl = "{{ asset('pdf/kit-del-sueno.pdf') }}";
+                    // Resetear estados de validación
+                    isNombreValid = false;
+                    isEmailValid = false;
+                    isCelularValid = false;
                     
-                    // Crear un enlace invisible
-                    const link = document.createElement('a');
-                    link.href = pdfUrl;
-                    link.download = 'kit-del-sueno.pdf';
-                    link.target = '_blank';
-                    
-                    // Añadir al DOM, hacer clic y eliminar
-                    document.body.appendChild(link);
-                    link.click();
-                    
-                    // Eliminar después de un breve tiempo
-                    setTimeout(() => {
-                        document.body.removeChild(link);
-                    }, 100);
+                    // Eliminar clases de validación
+                    nombreInput.classList.remove('valid', 'is-invalid');
+                    emailInput.classList.remove('valid', 'is-invalid');
+                    celularInput.classList.remove('valid', 'is-invalid');
+                } else if (data.errors) {
+                    // Mostrar errores de validación
+                    Object.keys(data.errors).forEach(field => {
+                        const input = document.querySelector(`input[name="${field}"]`);
+                        if (input) {
+                            const errorDiv = document.createElement('div');
+                            errorDiv.classList.add('text-danger');
+                            errorDiv.textContent = data.errors[field][0];
+                            input.after(errorDiv);
+                            input.classList.add('is-invalid');
+                            
+                            // Actualizar estados de validación
+                            if (field === 'nombre') isNombreValid = false;
+                            if (field === 'email') isEmailValid = false;
+                            if (field === 'celular') isCelularValid = false;
+                        }
+                    });
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                // Podemos mostrar un mensaje genérico de éxito para evitar errores
+                // si el servidor no responde con JSON
+                if (successMessage) {
+                    successMessage.textContent = '¡Te has unido a la Liga de los Sueños!';
+                    successMessage.style.display = 'block';
                 }
                 
-                // Marcar campos con error como inválidos (para errores del servidor)
-                const errorMessages = document.querySelectorAll('.text-danger');
-                errorMessages.forEach(function(errorMsg) {
-                    const inputField = errorMsg.previousElementSibling;
-                    if (inputField && inputField.classList.contains('form-control')) {
-                        inputField.classList.add('is-invalid');
-                        
-                        // Actualizar estados de validación para campos con errores del servidor
-                        if (inputField.name === 'nombre') isNombreValid = false;
-                        if (inputField.name === 'email') isEmailValid = false;
-                        if (inputField.name === 'celular') isCelularValid = false;
-                    }
-                });
+                // Descargar PDF de todos modos
+                downloadPDF();
                 
-                // Muestra alertas de éxito temporalmente
-                const successAlert = document.querySelector('.alert-success');
-                if (successAlert) {
-                    setTimeout(function() {
-                        successAlert.style.transition = 'opacity 0.5s ease';
-                        successAlert.style.opacity = '0';
-                        setTimeout(function() {
-                            successAlert.style.display = 'none';
-                        }, 500);
-                    }, 5000); // Desaparece después de 5 segundos
-                }
+                // Limpiar formulario
+                form.reset();
+            })
+            .finally(() => {
+                // Actualizar estado del botón
+                updateButtonState();
             });
-        </script>
+        });
+        
+        // Marcar campos con error como inválidos (para errores del servidor)
+        const errorMessages = document.querySelectorAll('.text-danger');
+        errorMessages.forEach(function(errorMsg) {
+            const inputField = errorMsg.previousElementSibling;
+            if (inputField && inputField.classList.contains('form-control')) {
+                inputField.classList.add('is-invalid');
+                
+                // Actualizar estados de validación para campos con errores del servidor
+                if (inputField.name === 'nombre') isNombreValid = false;
+                if (inputField.name === 'email') isEmailValid = false;
+                if (inputField.name === 'celular') isCelularValid = false;
+            }
+        });
+        
+        // Muestra alertas de éxito temporalmente
+        const successAlert = document.querySelector('.alert-success');
+        if (successAlert && successAlert.style.display !== 'none') {
+            setTimeout(function() {
+                successAlert.style.transition = 'opacity 0.5s ease';
+                successAlert.style.opacity = '0';
+                setTimeout(function() {
+                    successAlert.style.display = 'none';
+                }, 500);
+            }, 5000); // Desaparece después de 5 segundos
+        }
+    });
+</script>
     </body>
 </html>
