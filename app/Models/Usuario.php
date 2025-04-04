@@ -14,6 +14,7 @@ class Usuario extends Model
     protected $fillable = [
         'nombre',
         'email',
-        'celular'
+        'celular',
+        'empresa', // Añadido
     ];
 }

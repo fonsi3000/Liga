@@ -774,30 +774,47 @@
                 
                 <form id="dreamLeagueForm" action="{{ route('unirse.store') }}" method="POST" autocomplete="on" class="dream-form" novalidate>
                     @csrf
+                
                     <div class="form-group">
                         <input type="text" name="nombre" placeholder="Nombre completo" class="form-control" 
-                                value="{{ old('nombre') }}" autocomplete="name">
+                                value="{{ old('nombre') }}" autocomplete="name" required>
                         @error('nombre')
                             <div class="text-danger">{{ $message }}</div>
                         @enderror
                     </div>
-                    
+                
                     <div class="form-group">
                         <input type="email" name="email" placeholder="E-mail" class="form-control" 
-                                value="{{ old('email') }}" autocomplete="email">
+                                value="{{ old('email') }}" autocomplete="email" required>
                         @error('email')
                             <div class="text-danger">{{ $message }}</div>
                         @enderror
                     </div>
-                    
+                
                     <div class="form-group">
                         <input type="tel" name="celular" placeholder="Celular" class="form-control" 
-                                value="{{ old('celular') }}" autocomplete="tel">
+                                value="{{ old('celular') }}" autocomplete="tel" required>
                         @error('celular')
                             <div class="text-danger">{{ $message }}</div>
                         @enderror
                     </div>
-                    
+                
+                    <!-- NUEVO CAMPO EMPRESA -->
+                    <div class="form-group">
+                        <select name="empresa" class="form-control" required>
+                            <option value="" style="color: black;">Cual es tu empresa mas cercana?</option>
+                            <option style="color: black;" value="Espumas Medellín S.A" {{ old('empresa') == 'Espumas Medellín S.A' ? 'selected' : '' }}>
+                                Espumas Medellín S.A
+                            </option>
+                            <option style="color: black;" value="Espumados del Litoral" {{ old('empresa') == 'Espumados del Litoral' ? 'selected' : '' }}>
+                                Espumados del Litoral S.A
+                            </option>
+                        </select>
+                        @error('empresa')
+                            <div class="text-danger">{{ $message }}</div>
+                        @enderror
+                    </div>
+                
                     <button type="submit" class="submit-button">
                         <span>OBTÉN TU KIT DEL SUEÑO GRATIS</span>
                         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
@@ -806,198 +823,167 @@
                             <line x1="12" y1="15" x2="12" y2="3"></line>
                         </svg>
                     </button>
-                    
+                
                     @if(session('success'))
                         <div class="alert alert-success mt-3">
                             {{ session('success') }}
                         </div>
                     @endif
-                    
+                
                     <div class="alert alert-success mt-3" id="success-message" style="display: none;"></div>
                 </form>
+                
             </div>
         </div>
 
        <!-- Scripts para el slider y la validación del formulario -->
-        <script>
-            let slideIndex = 0;
-            const slides = document.querySelectorAll('.slide');
-            const dots = document.querySelectorAll('.slider-dot');
-            
-            function showSlide(n) {
-                if (n >= slides.length) slideIndex = 0;
-                if (n < 0) slideIndex = slides.length - 1;
-                
-                // Usar translateX con un valor exacto
-                document.querySelector('.slider').style.transform = `translateX(-${slideIndex * 100}%)`;
-                
-                // Actualizar los dots
-                dots.forEach(dot => dot.classList.remove('active'));
-                dots[slideIndex].classList.add('active');
-            }
-            
-            function moveSlide(n) {
-                showSlide(slideIndex += n);
-            }
-            
-            function currentSlide(n) {
-                showSlide(slideIndex = n);
-            }
-            
-            // Iniciar el slider
-            showSlide(slideIndex);
-            
-            // Autorotación del slider cada 10 segundos
-            setInterval(() => {
-                moveSlide(1);
-            }, 10000);
-            
-            // Ajustar elementos al cambiar tamaño de ventana
-            window.addEventListener('resize', function() {
-                // Recalcular altura del slider en dispositivos móviles
-                if (window.innerWidth <= 768) {
-                    const viewportHeight = window.innerHeight;
-                    const sliderContainer = document.querySelector('.slider-container');
-                    sliderContainer.style.height = `${viewportHeight * 0.35}px`;
-                }
+<script>
+    let slideIndex = 0;
+    const slides = document.querySelectorAll('.slide');
+    const dots = document.querySelectorAll('.slider-dot');
+    
+    function showSlide(n) {
+        if (n >= slides.length) slideIndex = 0;
+        if (n < 0) slideIndex = slides.length - 1;
+        
+        document.querySelector('.slider').style.transform = `translateX(-${slideIndex * 100}%)`;
+        dots.forEach(dot => dot.classList.remove('active'));
+        dots[slideIndex].classList.add('active');
+    }
+    
+    function moveSlide(n) {
+        showSlide(slideIndex += n);
+    }
+    
+    function currentSlide(n) {
+        showSlide(slideIndex = n);
+    }
+    
+    showSlide(slideIndex);
+    
+    setInterval(() => {
+        moveSlide(1);
+    }, 10000);
+    
+    window.addEventListener('resize', function() {
+        if (window.innerWidth <= 768) {
+            const viewportHeight = window.innerHeight;
+            const sliderContainer = document.querySelector('.slider-container');
+            sliderContainer.style.height = `${viewportHeight * 0.35}px`;
+        }
+    });
+
+    document.addEventListener('DOMContentLoaded', function() {
+        const images = document.querySelectorAll('.hero-image');
+        images.forEach(img => {
+            img.addEventListener('load', function() {
+                this.style.opacity = 1;
             });
-            
-            // Todo el código se ejecuta cuando el DOM está completamente cargado
-            document.addEventListener('DOMContentLoaded', function() {
-                // Mejora de carga de imágenes
-                const images = document.querySelectorAll('.hero-image');
-                images.forEach(img => {
-                    img.addEventListener('load', function() {
-                        this.style.opacity = 1;
-                    });
-                    // Iniciar con opacidad 0 y transición
-                    img.style.opacity = 0;
-                    img.style.transition = 'opacity 0.5s ease';
-                });
-                
-                // Referencias a los elementos del formulario
-                const form = document.querySelector('form');
-                const submitButton = document.querySelector('.submit-button');
-                const successMessage = document.getElementById('success-message');
-                
-                // Función para abrir el enlace de Google Drive
-                function openGoogleDriveLink() {
-                    // Enlace de Google Drive proporcionado
-                    const driveUrl = "https://drive.google.com/file/d/1FzuDqG3DZBLFpin_uAWVrk72TR4tj5MM/view";
-                    
-                    // Abrir el enlace en una nueva pestaña sin mostrar mensajes adicionales
-                    window.open(driveUrl, '_blank');
+            img.style.opacity = 0;
+            img.style.transition = 'opacity 0.5s ease';
+        });
+
+        const form = document.querySelector('form');
+        const submitButton = document.querySelector('.submit-button');
+        const successMessage = document.getElementById('success-message');
+
+        // Nueva función para abrir el enlace de Drive según la empresa
+        function openGoogleDriveLink(empresa) {
+            const driveUrlMedellin = "https://drive.google.com/file/d/1FzuDqG3DZBLFpin_uAWVrk72TR4tj5MM/view";
+            const driveUrlLitoral = "https://drive.google.com/file/d/1by9EJ-Qr1zrJOW-xsbWaKXGOyF42hgDn/view";
+            const url = (empresa === 'Espumados del Litoral') ? driveUrlLitoral : driveUrlMedellin;
+            window.open(url, '_blank');
+        }
+
+        form.addEventListener('submit', function(event) {
+            event.preventDefault();
+
+            const dynamicErrors = document.querySelectorAll('.text-danger:not(.laravel-error)');
+            dynamicErrors.forEach(el => el.remove());
+
+            submitButton.disabled = true;
+            submitButton.style.opacity = '0.6';
+
+            const formData = new FormData(form);
+            const selectedEmpresa = form.querySelector('select[name="empresa"]')?.value || '';
+
+            fetch(form.action, {
+                method: 'POST',
+                body: formData,
+                headers: {
+                    'X-Requested-With': 'XMLHttpRequest',
+                    'Accept': 'application/json'
+                },
+                redirect: 'manual'
+            })
+            .then(response => {
+                if (response.redirected) {
+                    return { success: true, message: '¡Te has unido a la Liga de los Sueños!' };
                 }
-                
-                // AJAX para el envío del formulario sin cambiar de página
-                form.addEventListener('submit', function(event) {
-                    event.preventDefault(); // Prevenir el envío normal del formulario
-                    
-                    // Limpiar errores previos (solo los agregados dinámicamente, no los de Laravel)
-                    const dynamicErrors = document.querySelectorAll('.text-danger:not(.laravel-error)');
-                    dynamicErrors.forEach(el => el.remove());
-                    
-                    // Deshabilitar botón durante el envío
-                    submitButton.disabled = true;
-                    submitButton.style.opacity = '0.6';
-                    
-                    // Crear objeto FormData con los datos del formulario
-                    const formData = new FormData(form);
-                    
-                    // Petición AJAX
-                    fetch(form.action, {
-                        method: 'POST',
-                        body: formData,
-                        headers: {
-                            'X-Requested-With': 'XMLHttpRequest',
-                            'Accept': 'application/json'
-                        },
-                        redirect: 'manual' // No seguir redirecciones
-                    })
-                    .then(response => {
-                        if (response.redirected) {
-                            return { success: true, message: '¡Te has unido a la Liga de los Sueños!' };
-                        }
-                        return response.json();
-                    })
-                    .then(data => {
-                        if (data.success) {
-                            // Mostrar mensaje de éxito
-                            if (successMessage) {
-                                successMessage.textContent = data.message || '¡Te has unido a la Liga de los Sueños!';
-                                successMessage.style.display = 'block';
-                            }
-                            
-                            // Limpiar formulario
-                            form.reset();
-                            
-                            // Abrir enlace de Google Drive
-                            openGoogleDriveLink();
-                            
-                            // Eliminar clases de validación
-                            document.querySelectorAll('.form-control').forEach(el => {
-                                el.classList.remove('is-invalid', 'valid');
-                            });
-                            
-                        } else if (data.errors) {
-                            // Mostrar errores de validación del servidor
-                            Object.keys(data.errors).forEach(field => {
-                                const input = document.querySelector(`input[name="${field}"]`);
-                                if (input) {
-                                    const errorDiv = document.createElement('div');
-                                    errorDiv.classList.add('text-danger');
-                                    errorDiv.textContent = data.errors[field][0];
-                                    input.after(errorDiv);
-                                    input.classList.add('is-invalid');
-                                }
-                            });
-                        }
-                    })
-                    .catch(error => {
-                        console.error('Error:', error);
-                        // Podemos mostrar un mensaje genérico de éxito para evitar errores
-                        // si el servidor no responde con JSON
-                        if (successMessage) {
-                            successMessage.textContent = '¡Te has unido a la Liga de los Sueños!';
-                            successMessage.style.display = 'block';
-                        }
-                        
-                        // Abrir Google Drive de todos modos
-                        openGoogleDriveLink();
-                        
-                        // Limpiar formulario
-                        form.reset();
-                    })
-                    .finally(() => {
-                        // Volver a habilitar el botón
-                        submitButton.disabled = false;
-                        submitButton.style.opacity = '1';
-                    });
-                });
-                
-                // Marcar campos con error del servidor
-                const errorMessages = document.querySelectorAll('.text-danger');
-                errorMessages.forEach(function(errorMsg) {
-                    const inputField = errorMsg.previousElementSibling;
-                    if (inputField && inputField.classList.contains('form-control')) {
-                        inputField.classList.add('is-invalid');
-                        // Agregar clase para identificar errores de Laravel
-                        errorMsg.classList.add('laravel-error');
+                return response.json();
+            })
+            .then(data => {
+                if (data.success) {
+                    if (successMessage) {
+                        successMessage.textContent = data.message || '¡Te has unido a la Liga de los Sueños!';
+                        successMessage.style.display = 'block';
                     }
-                });
-                
-                // Muestra alertas de éxito temporalmente
-                const successAlert = document.querySelector('.alert-success');
-                if (successAlert && successAlert.style.display !== 'none') {
-                    setTimeout(function() {
-                        successAlert.style.transition = 'opacity 0.5s ease';
-                        successAlert.style.opacity = '0';
-                        setTimeout(function() {
-                            successAlert.style.display = 'none';
-                        }, 500);
-                    }, 5000); // Desaparece después de 5 segundos
+
+                    form.reset();
+                    openGoogleDriveLink(selectedEmpresa);
+
+                    document.querySelectorAll('.form-control').forEach(el => {
+                        el.classList.remove('is-invalid', 'valid');
+                    });
+                } else if (data.errors) {
+                    Object.keys(data.errors).forEach(field => {
+                        const input = document.querySelector(`[name="${field}"]`);
+                        if (input) {
+                            const errorDiv = document.createElement('div');
+                            errorDiv.classList.add('text-danger');
+                            errorDiv.textContent = data.errors[field][0];
+                            input.after(errorDiv);
+                            input.classList.add('is-invalid');
+                        }
+                    });
                 }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                if (successMessage) {
+                    successMessage.textContent = '¡Te has unido a la Liga de los Sueños!';
+                    successMessage.style.display = 'block';
+                }
+                openGoogleDriveLink(selectedEmpresa);
+                form.reset();
+            })
+            .finally(() => {
+                submitButton.disabled = false;
+                submitButton.style.opacity = '1';
             });
-        </script>
+        });
+
+        const errorMessages = document.querySelectorAll('.text-danger');
+        errorMessages.forEach(function(errorMsg) {
+            const inputField = errorMsg.previousElementSibling;
+            if (inputField && inputField.classList.contains('form-control')) {
+                inputField.classList.add('is-invalid');
+                errorMsg.classList.add('laravel-error');
+            }
+        });
+
+        const successAlert = document.querySelector('.alert-success');
+        if (successAlert && successAlert.style.display !== 'none') {
+            setTimeout(function() {
+                successAlert.style.transition = 'opacity 0.5s ease';
+                successAlert.style.opacity = '0';
+                setTimeout(function() {
+                    successAlert.style.display = 'none';
+                }, 500);
+            }, 5000);
+        }
+    });
+</script>
+
     </body>
 </html>
