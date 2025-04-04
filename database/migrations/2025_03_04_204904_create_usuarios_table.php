@@ -13,7 +13,7 @@ return new class extends Migration
             $table->string('nombre');
             $table->string('email')->unique();
             $table->string('celular');
-            $table->string('empresa'); // Nueva columna
+            $table->string('empresa')->nullable();
             $table->timestamps();
         });
     }
