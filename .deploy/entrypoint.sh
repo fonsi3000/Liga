@@ -8,7 +8,8 @@ echo "🎬 artisan commands"
 
 # 💡 Group into a custom command e.g. php artisan app:on-deploy
 # Ejecutar migraciones
-php artisan migrate:fresh 
+php artisan migrate:fresh
+
 # php artisan voyager:install --no-interaction --force
 
 
